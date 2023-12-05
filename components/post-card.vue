@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NCard, NButton } from "naive-ui";
-import { IPost } from "~/types/post";
+import type { IPost } from "~/types/post-types";
 
 defineProps<{
   post: IPost;
@@ -13,7 +13,7 @@ defineProps<{
     <p class="text-gray-500 mb-2 text-lg">
       {{ post.body }}
     </p>
-    <nuxt-link to="/post/1" class="text-primary">
+    <nuxt-link :to="`/post/${post.id}`" class="text-primary">
       <n-button type="success" class="text-green-800">Go to post</n-button>
     </nuxt-link>
   </n-card>
