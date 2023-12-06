@@ -26,6 +26,7 @@ To start the development server, follow these steps:
 npm install
 # or
 yarn install
+```
 
 ## Usage
 
@@ -41,6 +42,12 @@ yarn install
   npm run dev
   # or
   yarn dev
+```
+
+To start with Docker run
+
+```bash
+  docker compose up -d --build
 ```
 
 ## Structure
