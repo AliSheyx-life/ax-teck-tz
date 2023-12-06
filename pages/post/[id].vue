@@ -1,14 +1,24 @@
 <script setup lang="ts">
 // import { useFetch, useRuntimeConfig } from "nuxt/app";
-import { NIcon, NList, NListItem, NThing } from "naive-ui";
-import { ArrowLeft } from "@vicons/fa";
+import { NIcon, NList, NListItem, NThing, NInput } from "naive-ui";
+import { ArrowLeft, Search } from "@vicons/fa";
 import { useRoute } from "vue-router";
+import { debounce } from "@/utils/utils";
 import type { IComment, IPost } from "~/types/post-types";
 
+const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 const postId = route.params.id;
-const runtimeConfig = useRuntimeConfig();
+const commentAuthorName = ref("");
 // const cookie = useCookie("totalCount");
+
+const searchComments = debounce((value: string) => {
+  commentAuthorName.value = value;
+}, 300);
+
+const getSearchAuthorName = computed(() => {
+  return commentAuthorName.value ? commentAuthorName.value : undefined;
+});
 
 const { data: post } = await useFetch<IPost>(`/posts/${postId}`, {
   baseURL: runtimeConfig.public.API_BASE_URL,
@@ -20,6 +30,9 @@ const { data: comments } = await useFetch<IComment[]>(
   {
     baseURL: runtimeConfig.public.API_BASE_URL,
     method: "GET",
+    params: {
+      name_like: getSearchAuthorName,
+    },
   },
 );
 </script>
@@ -46,7 +59,19 @@ const { data: comments } = await useFetch<IComment[]>(
       <div class="comments-body">
         <h2 class="text-2xl uppercase mb-5">Comments</h2>
         <div class="comments-list">
-          <n-list hoverable clickable>
+          <n-input
+            placeholder="Search by author"
+            round
+            clearable
+            size="large"
+            @input="searchComments"
+          >
+            <template #prefix>
+              <n-icon :component="Search" />
+            </template>
+          </n-input>
+
+          <n-list hoverable clickable class="mt-5">
             <n-list-item v-for="comment in comments" :key="comment.id">
               <n-thing :title="comment.name" class="my-5 uppercase">
                 <template #description>
