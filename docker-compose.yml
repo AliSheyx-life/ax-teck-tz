@@ -1,0 +1,27 @@
+version: '3.2'
+
+services:
+  json-server:
+    image: node:18
+    # volumes:
+    #   - ./:/app
+    working_dir: /app
+    command:
+      - sh
+      - -c
+      - |
+        npm install -g json-server
+        json-server --watch db.json --port 5050
+    restart: always
+    ports:
+      - 5050:5050
+    depends_on:
+      - node-front
+
+  node-front:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    

@@ -9,10 +9,7 @@
       "@/*": ["./*"]
     },
     "typeRoots": ["node_modules/@types"],
-    "types": [
-      // "@nuxt/types",
-      "node"
-    ]
+    "types": ["@nuxt/types", "node"]
   },
   "extends": "./.nuxt/tsconfig.json"
 }

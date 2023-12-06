@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 
-import homePage from "../pages/index.vue";
+import postPage from "../../pages/index.vue";
 
-describe("HomePage", () => {
+describe("PostPage", () => {
   it("is a Vue instance", () => {
-    const wrapper = mount(homePage);
+    const wrapper = mount(postPage);
     expect(wrapper.vm).toBeTruthy();
   });
 });
